@@ -10,10 +10,11 @@ won't understand much, so just bear with the silly references here.
 The idea for the bot's name is that a bot with no purpose has no future.\
 Simple as that.
 
+Some of the code you see here (especially core.utils and Roger) was yoinked off my other bot, [Daedalus](https://github.com/yuriel-v/Daedalus).
 ---
 
-### To do list:
+### To-do list:
 * Add a future
 * Add ChanServ-like mockery for moderation
-* Yoink Roger commands from Daedalus
+* ~~Yoink Roger commands from Daedalus~~ done! :godmode:
 * Add YouTube/Google Image search functions

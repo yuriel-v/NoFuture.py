@@ -1,0 +1,15 @@
+---
+# Example configuration file for NoFuture bot
+# Please do change this file to 'config.yml' once done.
+
+nofuture:
+  version: 0.1
+  discord_token: "discordtokenid"
+  owner_id: "discord owner ID goes here, this is numeric!"
+  # this is for the bot's main guild, which should be a test server or something like that
+  hub_guild: "hub guild ID goes here, this is also numeric!"
+  api_tokens:
+    imgur: "imgurclientid"
+    ggl_images: "googleimagesid"
+    yt: "youtubeid"
+

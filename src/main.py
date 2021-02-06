@@ -3,7 +3,7 @@ NoFuture.py: A future-less Discord bot (Python version)
 -------------------------------------------------------------------------------
 Look, I'll give it to you straight: This is a general-purpose,
 do-whatever-you-want kind of bot, it has no specific goal and is mostly there
-so I can practive programming and not get bored out of my mind with
+so I can practice programming and not get bored out of my mind with
 infrastructure at work.
 
 This bot's name, possibly its avatar picture too (in the original instance that
@@ -13,6 +13,8 @@ haven't given the show a read or a watch, you likely won't understand much.
 
 The idea for the bot's name is that a bot with no purpose has no future.
 Simple as that.
+
+And yes, the text above is the original one that I moved to README.md.
 -------------------------------------------------------------------------------
 This file in particular has the core stuff and the bot's setup/main event loop.
 Cogs in particular go into their respective categories under ./cogs/category.
@@ -20,27 +22,24 @@ Cogs in particular go into their respective categories under ./cogs/category.
 
 # Import essentials/builtins
 from discord.ext import commands
-from discord.ext.commands.core import is_owner
 from discord.flags import Intents
-from os import getenv
 from sqlalchemy.orm import close_all_sessions
+from core.utils import nf_configs
 
 # Import cogs
-# ...
+from cogs.roger.roger import Roger
 
 # Bot configuration
-nf_token = getenv("NF_TOKEN")
 bot = commands.Bot(
     command_prefix="nf ",
-    owner_id=int(getenv("NF_OWNERID")),
+    owner_id=nf_configs['owner_id'],
     intents=Intents(messages=True, guilds=True, members=True, presences=True)
 )
 
 # Cogs
-# ...
+bot.add_cog(Roger(bot))
 
 # Bot events
-
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
@@ -54,7 +53,6 @@ async def on_ready():
 
 
 # Core commands, mostly debugging stuff
-
 @bot.command('hi')
 async def nf_greet(ctx: commands.Context):
     if ctx.author.display_name != ctx.author.name:
@@ -72,6 +70,6 @@ async def nf_shutdown(ctx: commands.Context):
         await bot.logout()
 
 # After 200 years...
-bot.run(nf_token)
+bot.run(nf_configs['discord_token'])
 #close_all_sessions()  # for SQLAlchemy
 print("THAT'S IT! REHABILITATION! FIRST COMES REHABILITATION!")

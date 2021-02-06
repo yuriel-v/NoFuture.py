@@ -1,3 +1,5 @@
 discord.py
 SQLAlchemy
 psycopg2
+requests
+ruamel.yaml
