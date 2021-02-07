@@ -25,7 +25,7 @@ class NFYouTube(commands.Cog):
     
     @commands.command('yt-list')
     async def yt_list_search(self, ctx: commands.Context):
-        """Sends a search string to YouTube and returns a list with the first 5 matches."""
+        """Sends a search string to YouTube and prints a list with links to the first 5 matches."""
         terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")

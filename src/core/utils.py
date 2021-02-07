@@ -1,9 +1,38 @@
+"""
+core.utils: Utils file
+Self-explanatory, this is a collection of utils used by other cogs and stuffs.
+"""
+from os import getenv
+from ruamel.yaml import YAML
 from typing import Iterable, Union
 from ruamel.yaml import YAML
 
 yaml = YAML(typ='safe')
-with open('./src/config.yml', mode='r', encoding='utf-8') as file:
-    nf_configs = yaml.load(file)['nofuture']
+
+def load_configs():
+    try:
+        with open('./src/config.yml', mode='r', encoding='utf-8') as file:
+            nf_configs = yaml.load(file)['nofuture']
+    except Exception as e:
+        # load from environment variables instead
+        print(f"Attempting to load configs from environment variables instead.\nException thrown: {e}")
+
+        nf_configs = {
+            'version': float(getenv("NF_VERSION")),
+            'discord_token': getenv("NF_DISCORD_TOKEN"),
+            'owner_id': int(getenv("NF_OWNER_ID")),
+            'hub_guild': int(getenv("NF_HUB_GUILD")),
+            'api_tokens': {
+                'imgur': getenv("NF_APIS_IMGUR"),
+                'ggl_images_api': getenv("NF_APIS_GGL_IMAGES_API"),
+                'ggl_images_cx': getenv("NF_APIS_GGL_IMAGES_CX")
+            }
+        }
+
+    return nf_configs
+
+# this has to be defined down here, obviously
+nf_configs = load_configs()
 
 
 def reload_configs():
@@ -13,7 +42,7 @@ def reload_configs():
 
 
 def nround(number: float, decimals=1):
-    """Normalized round. nround(0.5) = 1"""
+    """Normalized round. nround(0.5) = 1 (unlike round())"""
     number = str(number)
     # if decimal places <= decimals
     if len(number[number.index('.')::]) <= decimals + 1:

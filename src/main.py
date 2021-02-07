@@ -44,6 +44,8 @@ bot.add_cog(NFYouTube(bot))
 # Bot events
 @bot.event
 async def on_command_error(ctx, error):
+    # this one is just so the logs don't get polluted with
+    # "ignoring unknown command" errors
     if isinstance(error, commands.CommandNotFound):
         return
     else:
@@ -51,7 +53,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_ready():
-    print("NoFuture bot running now. I want to watch some quality comedy.")
+    print("NoFuture bot running now. I want to watch some quality comedy...\nPress CTRL+C to terminate.")
 
 
 # Core commands, mostly debugging stuff
