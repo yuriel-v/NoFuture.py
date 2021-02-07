@@ -28,6 +28,7 @@ from core.utils import nf_configs
 
 # Import cogs
 from cogs.roger.roger import Roger
+from cogs.youtube import NFYouTube
 
 # Bot configuration
 bot = commands.Bot(
@@ -38,6 +39,7 @@ bot = commands.Bot(
 
 # Cogs
 bot.add_cog(Roger(bot))
+bot.add_cog(NFYouTube(bot))
 
 # Bot events
 @bot.event

@@ -30,13 +30,13 @@ class Roger(commands.Cog, name='Roger'):
     @ferozes()
     async def roger_select(self, ctx: commands.Context):
         arguments = split_args(ctx.message.content)
-        if len(arguments) < 2:
+        if not arguments:
             await ctx.send("O que é, desgraça?")
 
-        elif arguments[1].lower() == "responde:":
+        elif arguments[0].lower() == "responde:":
             await self.roger_responde(ctx)
 
-        elif arguments[1] == '?':
+        elif arguments[0] == '?':
             await self.roger(ctx)
 
         else:
@@ -68,7 +68,7 @@ class Roger(commands.Cog, name='Roger'):
 
         Roger diz: SE LASCAR
         """
-        if len(split_args(ctx.message.content)) > 2:
+        if len(split_args(ctx.message.content)) >= 2:
             await ctx.send(f"<@450731404532383765> diz: {self.roger_responses[randint(1, len(self.roger_responses.keys()))]}")
         else:
             await ctx.send(f"<@450731404532383765> diz: Se lascar, pergunta alguma coisa!")

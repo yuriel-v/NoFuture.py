@@ -34,7 +34,8 @@ def split_args(arguments: str, islist=True) -> Union[list[str], str]:
     If `islist = False` then this returns a full string without the command prefix.
     """
     arguments = arguments.split(' ')
-    arguments.pop(0)
+    arguments.pop(0)  # prefix
+    arguments.pop(0)  # command
     if islist:
         return arguments
     else:
@@ -81,12 +82,10 @@ def smoothen(message: Iterable):
         formatted_message += f'| {message} |\n'
     else:
         for string in message:
-            spaces = dashes - 1 - len(string)
-            # if string is just a string of dashes, extend it until box boundary if it's not there already
-            if string == len(string) * '-' and spaces > 1:
-                string += '-' * (spaces - 1)
-                spaces = 1
-            formatted_message += f'| {string}{" " * spaces}|\n'
+            if string == len(string) * '-':
+                formatted_message += '|' + '-'.ljust(dashes, '-') + '|\n'
+            else:
+                formatted_message += '| ' + string.ljust(dashes - 2) + ' |\n'
 
     formatted_message += f'+{"-" * dashes}+\n'
     return formatted_message
