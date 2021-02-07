@@ -20,7 +20,7 @@ Some of the code you see here (especially core.utils and Roger) was yoinked off 
 * Add a future (actually impossible <img width=30 heigth=30 src="https://cdn.discordapp.com/emojis/687688670190501908.png?v=1">)
 * Add ChanServ-like mockery for moderation
 * ~~Yoink Roger commands from Daedalus~~ done! :godmode:
-* Add YouTube/Google Image search functions
+* ~~Add YouTube/Google Image search functions~~ Both done! :godmode:
 
 ---
 
