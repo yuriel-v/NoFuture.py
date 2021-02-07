@@ -14,7 +14,7 @@ nofuture:
     ggl_images_cx: "google_images_cx"
 
 
-# Please notice: if you're deploying a repo remotely or otherwise doesn't want to expose the sensitive
+# Please notice: if you're deploying a repo remotely or otherwise don't want to expose the sensitive
 # information in this file, you can set them as environment variables.
 # The cheat sheet below can tell you the name of the environment variable to set for each key in the
 # dict up there.
