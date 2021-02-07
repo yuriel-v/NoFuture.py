@@ -4,7 +4,7 @@ from discord.colour import Colour
 from discord.embeds import Embed
 from discord.ext import commands
 from random import randint
-from urllib.parse import quote
+from urllib.parse import urlencode
 
 
 class NFGoogleImg(commands.Cog):
@@ -13,6 +13,7 @@ class NFGoogleImg(commands.Cog):
 
     @commands.command('img')
     async def google_image_search(self, ctx: commands.Context):
+        """Sends an embed containing the first image found in Google for the specified terms."""
         terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
@@ -29,6 +30,7 @@ class NFGoogleImg(commands.Cog):
     
     @commands.command('img-list')
     async def list_google_image_search(self, ctx: commands.Context):
+        """Sends an embed containing links to the first 5 Google Image Search matches for the specified terms."""
         terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
@@ -44,13 +46,12 @@ class NFGoogleImg(commands.Cog):
             await ctx.send(embed=embed)
 
     def _build_searchstr(self, terms: str, num: int = 1):
-        # multiple assignments since vscode doesn't break lines
-        # also, triple quote strings will include the leading spaces unless you break indentation
-        # it looks ugly on code so this is better for now
-        searchstr = "https://customsearch.googleapis.com/customsearch/v1"
-        searchstr += f"?cx={nf_configs['api_tokens']['ggl_images_cx']}"
-        searchstr += f"&key={nf_configs['api_tokens']['ggl_images_api']}"
-        searchstr += f"&num={num}"
-        searchstr += "&searchType=image"
-        searchstr += f"&q={quote(terms)}"
-        return searchstr
+        """Builds a query string for a Google Image search, with ther number and terms specified."""
+        query = {
+            'cx': nf_configs['api_tokens']['ggl_images_cx'],
+            'key': nf_configs['api_tokens']['ggl_images_api'],
+            'num': num,
+            'searchType': 'image',
+            'q': terms
+        }
+        return "https://customsearch.googleapis.com/customsearch/v1?" + urlencode(query)
