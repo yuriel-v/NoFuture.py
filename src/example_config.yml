@@ -4,12 +4,27 @@
 
 nofuture:
   version: 0.1
-  discord_token: "discordtokenid"
+  discord_token: "discord_token_id"
   owner_id: "discord owner ID goes here, this is numeric!"
   # this is for the bot's main guild, which should be a test server or something like that
   hub_guild: "hub guild ID goes here, this is also numeric!"
   api_tokens:
-    imgur: "imgurclientid"
-    ggl_images: "googleimagesid"
-    yt: "youtubeid"
+    imgur: "imgur_client_id"
+    ggl_images_api: "google_images_api_key"
+    ggl_images_cx: "google_images_cx"
 
+
+# Please notice: if you're deploying a repo remotely or otherwise doesn't want to expose the sensitive
+# information in this file, you can set them as environment variables.
+# The cheat sheet below can tell you the name of the environment variable to set for each key in the
+# dict up there.
+
+# version: NF_VERSION
+# discord_token: NF_DISCORD_TOKEN
+# owner_id: NF_OWNER_ID
+# hub_guild: NF_HUB_GUILD
+# api_tokens:
+  # imgur: NF_APIS_IMGUR
+  # ggl_images_api: NF_APIS_GGL_IMAGES_API
+  # ggl_images_cx: NF_APIS_GGL_IMAGES_CX
+...

@@ -29,6 +29,7 @@ from core.utils import nf_configs
 # Import cogs
 from cogs.roger.roger import Roger
 from cogs.youtube import NFYouTube
+from cogs.ggl_img import NFGoogleImg
 
 # Bot configuration
 bot = commands.Bot(
@@ -40,6 +41,7 @@ bot = commands.Bot(
 # Cogs
 bot.add_cog(Roger(bot))
 bot.add_cog(NFYouTube(bot))
+bot.add_cog(NFGoogleImg(bot))
 
 # Bot events
 @bot.event

@@ -1,15 +1,29 @@
-from typing import Iterable, Union
+from os import getenv
 from ruamel.yaml import YAML
+from typing import Iterable, Union
 
 yaml = YAML(typ='safe')
-with open('./src/config.yml', mode='r', encoding='utf-8') as file:
-    nf_configs = yaml.load(file)['nofuture']
-
-
-def reload_configs():
-    with open('./src/config.yml', mode='r', encoding='utf-8') as file:
-        global nf_configs
-        nf_configs = yaml.load(file)['nofuture']
+def load_configs():
+    try:
+        with open('./src/config.yml', mode='r', encoding='utf-8') as file:
+            nf_configs = yaml.load(file)['nofuture']
+    except Exception as e:
+        if isinstance(e, OSError):
+            # load from environment variables instead
+            nf_configs = dict({})
+            nf_configs['version'] = float(getenv("NF_VERSION"))
+            nf_configs['discord_token'] = getenv("NF_DISCORD_TOKEN")
+            nf_configs['owner_id'] = int(getenv("NF_OWNER_ID"))
+            nf_configs['hub_guild'] = int(getenv("NF_HUB_GUILD"))
+            nf_configs['api_tokens'] = dict({})
+            nf_configs['api_tokens']['imgur'] = getenv("NF_APIS_IMGUR")
+            nf_configs['api_tokens']['ggl_images_api'] = getenv("NF_APIS_GGL_IMAGES_API")
+            nf_configs['api_tokens']['ggl_images_cx'] = getenv("NF_APIS_GGL_IMAGES_CX")
+        else:
+            print(f"Exception thrown while loading configs: {e}")
+            nf_configs = None
+    return nf_configs
+nf_configs = load_configs()
 
 
 def nround(number: float, decimals=1):

@@ -22,7 +22,7 @@ class NFYouTube(commands.Cog):
             await ctx.send("Tough luck, no results found.")
             return
         await ctx.send(f"https://youtu.be/{results[0]['id']}")
-    
+
     @commands.command('yt-list')
     async def yt_list_search(self, ctx: commands.Context):
         """Sends a search string to YouTube and returns a list with the first 5 matches."""
