@@ -68,7 +68,7 @@ def split_args(arguments: str, islist=True) -> Union[list[str], str]:
 
 
 def arg_types(arguments: Union[list, tuple, set], repr=False):
-    """Splits arguments into strings, floats or integers."""
+    """Splits arguments into strings, floats or integers. Debug/curiosity tool."""
     arg_with_types = {0: [], 1: [], 2: []}
     for x in arguments:
         x = str(x)

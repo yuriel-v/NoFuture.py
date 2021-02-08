@@ -27,18 +27,20 @@ from sqlalchemy.orm import close_all_sessions
 from core.utils import nf_configs
 
 # Import cogs
+from cogs.games import Games
 from cogs.roger.roger import Roger
 from cogs.youtube import NFYouTube
 from cogs.ggl_img import NFGoogleImg
 
 # Bot configuration
 bot = commands.Bot(
-    command_prefix="nf ",
+    command_prefix=["nf ", '\\'],
     owner_id=nf_configs['owner_id'],
     intents=Intents(messages=True, guilds=True, members=True, presences=True)
 )
 
 # Cogs
+bot.add_cog(Games(bot))
 bot.add_cog(Roger(bot))
 bot.add_cog(NFYouTube(bot))
 bot.add_cog(NFGoogleImg(bot))
@@ -66,6 +68,15 @@ async def nf_greet(ctx: commands.Context):
     else:
         suffix = ctx.author.name
     await ctx.send(f"Hey there, {suffix}.")
+
+@bot.command('say')
+async def nf_say(ctx: commands.Context, *, message):
+    if not await bot.is_owner(ctx.author):
+        await ctx.send("<:zipper_mouth:808163806051041321>")
+    else:
+        await ctx.message.delete()
+        await ctx.send(message)
+
 
 @bot.command('die')
 async def nf_shutdown(ctx: commands.Context):
