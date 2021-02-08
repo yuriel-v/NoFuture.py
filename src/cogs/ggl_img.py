@@ -1,5 +1,5 @@
 import requests
-from core.utils import split_args, nf_configs
+from core.utils import nf_configs
 from discord.colour import Colour
 from discord.embeds import Embed
 from discord.ext import commands
@@ -12,9 +12,8 @@ class NFGoogleImg(commands.Cog):
         self.bot = bot
 
     @commands.command('img')
-    async def google_image_search(self, ctx: commands.Context):
+    async def google_image_search(self, ctx: commands.Context, *, terms=None):
         """Sends an embed containing the first image found in Google for the specified terms."""
-        terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
             return
@@ -29,9 +28,8 @@ class NFGoogleImg(commands.Cog):
             await ctx.send(embed=embed)
     
     @commands.command('img-list')
-    async def list_google_image_search(self, ctx: commands.Context):
+    async def list_google_image_search(self, ctx: commands.Context, *, terms=None):
         """Sends an embed containing links to the first 5 Google Image Search matches for the specified terms."""
-        terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
             return
