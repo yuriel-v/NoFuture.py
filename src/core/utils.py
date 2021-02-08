@@ -50,10 +50,13 @@ def avg(items: Union[list, tuple, set]):
     return sum(items) / len(items)
 
 
+
 def split_args(arguments: str, islist=True) -> Union[list[str], str]:
     """
     Splits a command's arguments into a list and returns it.
     If `islist = False` then this returns a full string without the command prefix.
+    Deprecated: This function was made obsolete thanks to keyword-only arguments
+    (`*, keyword=None` notation).
     """
     arguments = arguments.split(' ')
     arguments.pop(0)  # prefix

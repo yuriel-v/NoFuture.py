@@ -1,4 +1,3 @@
-from core.utils import split_args
 from discord.colour import Colour
 from discord.embeds import Embed
 from discord.ext import commands
@@ -10,9 +9,8 @@ class NFYouTube(commands.Cog):
         self.bot = bot
     
     @commands.command('yt')
-    async def yt_search(self, ctx: commands.Context):
+    async def yt_search(self, ctx: commands.Context, *, terms=None):
         """Searches for a YouTube video and links its first match."""
-        terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
             return
@@ -24,9 +22,8 @@ class NFYouTube(commands.Cog):
         await ctx.send(f"https://youtu.be/{results[0]['id']}")
 
     @commands.command('yt-list')
-    async def yt_list_search(self, ctx: commands.Context):
+    async def yt_list_search(self, ctx: commands.Context, *, terms=None):
         """Sends a search string to YouTube and prints a list with links to the first 5 matches."""
-        terms = split_args(ctx.message.content, islist=False)
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
             return

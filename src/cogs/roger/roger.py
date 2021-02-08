@@ -5,7 +5,6 @@
 
 import requests
 
-from core.utils import split_args
 from discord import Message
 from discord.ext import commands
 from discord.embeds import Embed
@@ -28,9 +27,8 @@ class Roger(commands.Cog, name='Roger'):
     
     @commands.group(name='roger')
     @ferozes()
-    async def roger(self, ctx: commands.Context):
+    async def roger(self, ctx: commands.Context, *, arguments=None):
         if ctx.invoked_subcommand is None:
-            arguments = split_args(ctx.message.content)
             if not arguments:
                 await ctx.send("O que é, desgraça?")
             else:
@@ -58,13 +56,13 @@ class Roger(commands.Cog, name='Roger'):
             print(f"Zica thrown: {e}")
 
     @roger.command(name='responde:')
-    async def roger_responde(self, ctx: commands.Context):
+    async def roger_responde(self, ctx: commands.Context, *, arguments=None):
         """
         Roger responde: Eu sou bom programador?
 
         Roger diz: SE LASCAR
         """
-        if len(split_args(ctx.message.content)) >= 2:
+        if arguments:
             await ctx.send(f"<@450731404532383765> diz: {self.roger_responses[randint(1, len(self.roger_responses.keys()))]}")
         else:
             await ctx.send(f"<@450731404532383765> diz: Se lascar, pergunta alguma coisa!")
