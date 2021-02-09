@@ -21,10 +21,18 @@ Cogs in particular go into their respective categories under ./cogs/category.
 """
 
 # Import essentials/builtins
+# import asyncio
+
+# from discord.errors import ConnectionClosed, GatewayNotFound, HTTPException, LoginFailure
 from discord.ext import commands
 from discord.flags import Intents
 from sqlalchemy.orm import close_all_sessions
-from core.utils import nf_configs
+from core.utils import nf_configs, yn
+
+# SQL stuffs
+from core.dao import engin
+from core.model import initialize_sql, DBSession
+from core.model.server import Server
 
 # Import cogs
 from cogs.games import Games
@@ -39,11 +47,14 @@ bot = commands.Bot(
     intents=Intents(messages=True, guilds=True, members=True, presences=True)
 )
 
+initialize_sql(engin)
+
 # Cogs
-bot.add_cog(Games(bot))
-bot.add_cog(Roger(bot))
-bot.add_cog(NFYouTube(bot))
-bot.add_cog(NFGoogleImg(bot))
+bot.add_cog(Games(bot, 1))
+bot.add_cog(Roger(bot, 2))
+bot.add_cog(NFYouTube(bot, 4))
+bot.add_cog(NFGoogleImg(bot, 8))
+
 
 # Bot events
 @bot.event
@@ -54,6 +65,7 @@ async def on_command_error(ctx, error):
         return
     else:
         raise error
+
 
 @bot.event
 async def on_ready():
@@ -68,6 +80,7 @@ async def nf_greet(ctx: commands.Context):
     else:
         suffix = ctx.author.name
     await ctx.send(f"Hey there, {suffix}.")
+
 
 @bot.command('say')
 async def nf_say(ctx: commands.Context, *, message):
@@ -87,6 +100,37 @@ async def nf_shutdown(ctx: commands.Context):
         await bot.logout()
 
 # After 200 years...
+# TODO Improve main event loop down below
+# def main():
+#     restart = True
+#     while restart:
+#         if not nf_configs['discord_token']:
+#             nf_configs['discord_token'] = input("I couldn't find a token to login with. Type one down below and let's try this again.\n>> ")
+#             print("Good. Let's try this. In the future, if you want to skip this prompt, consider looking at ./example_config.yml.")
+#         try:
+#             bot.run(nf_configs['discord_token'])
+
+#         except GatewayNotFound as e:
+#             print(f"Gateway wasn't found, likely a Discord API error.\n{e}")
+#         except ConnectionClosed as e:
+#             print(f"Connection closed by Discord.\n{e}")
+#         except LoginFailure as e:
+#             print(f"You gave me the wrong credentials, so Discord didn't let me log in.\n{e}")
+#         except HTTPException as e:
+#             print(f"Some weird HTTP error happened. More details below.\n{e}")
+#         except Exception as e:
+#             print(f"Something else went wrong and I'm not sure what. More details below.\n{e}")
+#         finally:
+#             print("Do you want to restart? Type yes or no below. ('no' will shut me down, obviously.)")
+#             restart = yn()
+
+# if __name__ == '__main__':
+#     try:
+#         main()
+#     except Exception as e:
+#         print(f"Something went wrong with the main loop. Terminating.\n{e}")
+
 bot.run(nf_configs['discord_token'])
-#close_all_sessions()  # for SQLAlchemy
+DBSession.commit()
+close_all_sessions()  # for SQLAlchemy
 print("THAT'S IT! REHABILITATION! FIRST COMES REHABILITATION!")

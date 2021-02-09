@@ -20,7 +20,8 @@ def ferozes():
 
 
 class Roger(commands.Cog, name='Roger'):
-    def __init__(self, bot):
+    def __init__(self, bot, id):
+        self.cog_id = id
         self.bot = bot
         with open('./src/cogs/roger/responses.yml', mode='r', encoding='utf-8') as file:
             self.roger_responses = yaml.load(file)['eight_ball']

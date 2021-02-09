@@ -7,18 +7,23 @@ from random import randint
 
 
 class Games(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, id):
+        self.cog_id = id
         self.bot = bot
-    
+
     @commands.command('rps')
     async def rock_paper_scissors(ctx: commands.Context, *, choice: str = None):
         """It's rock-paper-scissors. Rock beats paper, paper beats scissors, scissors beats rock."""
         rps = {'r': 'rock', 'p': 'paper', 's': 'scissors'}
+
         async def send_msg():
             string = f"I pick {rps[tuple(rps.keys())[bot_choice]]}! "
-            if outcome == 0: string += "I win!"
-            elif outcome == 1: string += "Oh, we draw."
-            else: string += "Damn, I lost..."
+            if outcome == 0:
+                string += "I win!"
+            elif outcome == 1:
+                string += "Oh, we draw."
+            else:
+                string += "Damn, I lost..."
             await ctx.send(string)
 
         if not choice:
@@ -34,20 +39,29 @@ class Games(commands.Cog):
             # 1 = paper
             # 2 = scissors
             if choice == 0:
-                if bot_choice == 0: outcome = 1
-                elif bot_choice == 1: outcome = 0
-                else: outcome = 2
+                if bot_choice == 0:
+                    outcome = 1
+                elif bot_choice == 1:
+                    outcome = 0
+                else:
+                    outcome = 2
             elif choice == 1:
-                if bot_choice == 0: outcome = 2
-                elif bot_choice == 1: outcome = 1
-                else: outcome = 0
+                if bot_choice == 0:
+                    outcome = 2
+                elif bot_choice == 1:
+                    outcome = 1
+                else:
+                    outcome = 0
             else:
-                if bot_choice == 0: outcome = 0
-                elif bot_choice == 1: outcome = 2
-                else: outcome = 1
-            
+                if bot_choice == 0:
+                    outcome = 0
+                elif bot_choice == 1:
+                    outcome = 2
+                else:
+                    outcome = 1
+
             await send_msg()
-    
+
     @commands.command(name='8ball')
     async def eight_ball(self, ctx: commands.Context):
         """Queries the omniscient 8-Ball for an answer."""
@@ -74,7 +88,7 @@ class Games(commands.Cog):
             20: "You may rely on it."
         }
         await ctx.send(f"{ctx.message.author.mention}: {eightball_replies[randint(1, 20)]}")
-    
+
     @commands.command('dog')
     async def random_dog(self, ctx: commands.Context):
         """Sends a random dog. Woof!"""

@@ -8,7 +8,8 @@ from urllib.parse import urlencode
 
 
 class NFGoogleImg(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, id):
+        self.cog_id = id
         self.bot = bot
 
     @commands.command('img')
@@ -26,14 +27,14 @@ class NFGoogleImg(commands.Cog):
             embed = Embed(description="Image first result:", colour=Colour(randint(0x000000, 0xFFFFFF)))
             embed.set_image(url=result[0]['link'])
             await ctx.send(embed=embed)
-    
+
     @commands.command('img-list')
     async def list_google_image_search(self, ctx: commands.Context, *, terms=None):
         """Sends an embed containing links to the first 5 Google Image Search matches for the specified terms."""
         if not terms:
             await ctx.send("Well I can't go searching for nothing now, can I? Give me something to search for.")
             return
-        
+
         results = requests.get(url=self._build_searchstr(terms, 5)).json()['items']
         if not results:
             await ctx.send("Tough luck, no results found.")

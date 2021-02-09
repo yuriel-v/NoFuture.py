@@ -5,9 +5,10 @@ from youtube_search import YoutubeSearch
 
 
 class NFYouTube(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, id):
         self.bot = bot
-    
+        self.cog_id = id
+
     @commands.command('yt')
     async def yt_search(self, ctx: commands.Context, *, terms=None):
         """Searches for a YouTube video and links its first match."""
@@ -32,7 +33,7 @@ class NFYouTube(commands.Cog):
         if not results:
             await ctx.send("Tough luck, no results found.")
             return
-        
+
         res = [f"{i + 1}. [{results[i]['title']}](https://youtu.be/{results[i]['id']})" for i in range(0, len(results))]
         embed = Embed(description='\n'.join(res), colour=Colour(0xFF0000))
         await ctx.send(embed=embed)

@@ -1,5 +1,7 @@
 NoFuture.py.code-workspace
 src/config.yml
+src/database
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

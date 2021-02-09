@@ -2,11 +2,15 @@
 core.utils: Utils file
 Self-explanatory, this is a collection of utils used by other cogs and stuffs.
 """
+import inspect
+import re
+
 from os import getenv
 from ruamel.yaml import YAML
 from typing import Iterable, Union
 
 yaml = YAML(typ='safe')
+
 
 def load_configs():
     try:
@@ -30,8 +34,17 @@ def load_configs():
 
     return nf_configs
 
+
 # this has to be defined down here, obviously
 nf_configs = load_configs()
+
+
+def whoami():
+    return inspect.stack()[1][3]
+
+
+def class_name(obj):
+    return tuple(filter(lambda x: x, re.findall(r"[a-zA-Z]*", str(obj.__class__))))[-1]
 
 
 def nround(number: float, decimals=1):
@@ -49,6 +62,17 @@ def avg(items: Union[list, tuple, set]):
     """Average between items in list/tuple/set."""
     return sum(items) / len(items)
 
+
+def yn():
+    while True:
+        reply = input("([y]es/[n]o)? > ")
+        if reply.lower() not in ('yes', 'no', 'y', 'n'):
+            continue
+        else:
+            if reply.lower() in ('yes', 'y'):
+                return True
+            else:
+                return False
 
 
 def split_args(arguments: str, islist=True) -> Union[list[str], str]:
